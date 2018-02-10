@@ -11,13 +11,19 @@ import UIKit
 class TableViewController: UITableViewController {
     
     var subjects : [SubjectItem] = []
+    var subject : Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         let math = SubjectItem("Mathematics", "This quiz is about math", "math")
+        let mathQuestion = QuestionObject(2, "What is 1 + 1?", ["1", "2", "3", "4"])
+        math.questions = [mathQuestion]
+        
         let marvel = SubjectItem("Marvel Super Heroes", "This quiz is about Marvel superheroes", "marvel")
+        marvel.questions = [mathQuestion]
         let science = SubjectItem("Science", "This quiz is about science", "science")
+        science.questions = [mathQuestion]
         
         subjects = [math, marvel, science]
     
@@ -51,6 +57,15 @@ class TableViewController: UITableViewController {
         cell.imageObject.image = UIImage(named: subjectItem.icon)
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        subject = indexPath.row
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let questionView = segue.destination as! QuestionViewController
+        questionView.subject = subjects[subject]
     }
 
     @IBAction func settingsClicked(_ sender: UIButton) {

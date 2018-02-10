@@ -84,7 +84,7 @@
         <!--Question-->
         <scene sceneID="x9T-jq-b6Z">
             <objects>
-                <viewController title="Question" id="vOe-bp-Tc3" sceneMemberID="viewController">
+                <viewController title="Question" id="vOe-bp-Tc3" customClass="QuestionViewController" customModule="iquiz" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lfa-ge-SGO">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -111,23 +111,36 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vvO-Tx-o6k">
                                                 <rect key="frame" x="0.0" y="0.0" width="125" height="30"/>
                                                 <state key="normal" title="A1"/>
+                                                <connections>
+                                                    <action selector="answerOnClick:" destination="vOe-bp-Tc3" eventType="touchUpInside" id="aDd-Ea-Trg"/>
+                                                </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BNk-cO-TFF">
+                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BNk-cO-TFF">
                                                 <rect key="frame" x="0.0" y="80" width="125" height="30"/>
                                                 <state key="normal" title="A3"/>
+                                                <connections>
+                                                    <action selector="answerOnClick:" destination="vOe-bp-Tc3" eventType="touchUpInside" id="wxh-6a-0pR"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="jhu-fl-Maj">
                                         <rect key="frame" x="150" y="0.0" width="125" height="110"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AOu-e4-wEq">
+                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AOu-e4-wEq">
                                                 <rect key="frame" x="0.0" y="0.0" width="125" height="30"/>
                                                 <state key="normal" title="A2"/>
+                                                <connections>
+                                                    <action selector="answerOnClick:" destination="vOe-bp-Tc3" eventType="touchUpInside" id="Ib9-V5-UxO"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XJ8-3f-kSU">
                                                 <rect key="frame" x="0.0" y="80" width="125" height="30"/>
+                                                <size key="titleShadowOffset" width="0.0" height="3"/>
                                                 <state key="normal" title="A4"/>
+                                                <connections>
+                                                    <action selector="answerOnClick:" destination="vOe-bp-Tc3" eventType="touchUpInside" id="ZRw-ej-keb"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -151,6 +164,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="b6P-zt-eru"/>
                     </view>
+                    <connections>
+                        <outlet property="answerButton1" destination="vvO-Tx-o6k" id="O8X-pU-NPz"/>
+                        <outlet property="answerButton2" destination="AOu-e4-wEq" id="gJm-zn-CUS"/>
+                        <outlet property="answerButton3" destination="BNk-cO-TFF" id="oNi-Af-fTl"/>
+                        <outlet property="answerButton4" destination="XJ8-3f-kSU" id="OSd-9k-9uG"/>
+                        <outlet property="questionText" destination="8Qd-YO-DU3" id="dXf-Ut-Bsq"/>
+                        <outlet property="submitButton" destination="IGB-gW-YFc" id="NLB-Au-T9m"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oEn-VF-ClM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -159,7 +180,7 @@
         <!--Answer-->
         <scene sceneID="11Z-P5-MfM">
             <objects>
-                <viewController title="Answer" id="F4T-NR-dnk" sceneMemberID="viewController">
+                <viewController title="Answer" id="F4T-NR-dnk" customClass="AnswerViewController" customModule="iquiz" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Jt7-aV-CCG">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -178,7 +199,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="125" height="30"/>
                                                 <state key="normal" title="A1"/>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="szr-SZ-hfP">
+                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="szr-SZ-hfP">
                                                 <rect key="frame" x="0.0" y="80" width="125" height="30"/>
                                                 <state key="normal" title="A3"/>
                                             </button>
@@ -187,11 +208,11 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="ckl-dO-9OG">
                                         <rect key="frame" x="150" y="0.0" width="125" height="110"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Xj-ZS-PVj">
+                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Xj-ZS-PVj">
                                                 <rect key="frame" x="0.0" y="0.0" width="125" height="30"/>
                                                 <state key="normal" title="A2"/>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sg4-qm-cgS">
+                                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sg4-qm-cgS">
                                                 <rect key="frame" x="0.0" y="80" width="125" height="30"/>
                                                 <state key="normal" title="A4"/>
                                             </button>
@@ -223,6 +244,10 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="fWG-RS-Mcm"/>
                     </view>
+                    <connections>
+                        <segue destination="scZ-dd-lyq" kind="show" identifier="FinishScreen" id="wNC-4l-XQP"/>
+                        <segue destination="vOe-bp-Tc3" kind="show" identifier="QuestionScreen" id="t5k-Yu-hZS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mY3-Go-UEh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -231,7 +256,7 @@
         <!--Finish-->
         <scene sceneID="q4i-vK-QJ5">
             <objects>
-                <viewController title="Finish" id="scZ-dd-lyq" sceneMemberID="viewController">
+                <viewController title="Finish" id="scZ-dd-lyq" customClass="FinishViewController" customModule="iquiz" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TyK-nh-Cd9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -291,6 +316,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="87B-Xm-l0O"/>
+        <segue reference="t5k-Yu-hZS"/>
         <segue reference="0dd-L9-OTU"/>
     </inferredMetricsTieBreakers>
 </document>
