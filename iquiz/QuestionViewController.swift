@@ -23,12 +23,21 @@ class QuestionViewController: UIViewController {
     var currentQuestion : Int?
     var numberOfQuestions : Int?
     var numCorrect : Int?
+    var answerSelected : Bool = false
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.hidesBackButton = true
         self.navigationItem.title = "\((subject?.subject)!) Quiz"
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.handleGesture(gesture:)))
+        swipeLeft.direction = .left
+        self.view.addGestureRecognizer(swipeLeft)
+
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.handleGesture(gesture:)))
+        swipeRight.direction = .right
+        self.view.addGestureRecognizer(swipeRight)
         
         question = (subject?.questions[currentQuestion!].question)!
         questionText.text = question
@@ -46,6 +55,7 @@ class QuestionViewController: UIViewController {
         sender.setTitleColor(UIColor.black, for: .normal)
         submitButton.isEnabled = true
         selectedAnswer = sender.tag
+        answerSelected = true
     }
     
     func setAnswers() {
@@ -62,14 +72,27 @@ class QuestionViewController: UIViewController {
         answerButton4.setTitleColor(UIColor.lightGray, for: .normal)
     }
     
+    @objc func handleGesture(gesture: UISwipeGestureRecognizer) -> Void {
+        if gesture.direction == UISwipeGestureRecognizerDirection.left {
+            if answerSelected {
+                performSegue(withIdentifier: "AnswerSegue", sender: self)
+            }
+        } else if gesture.direction == UISwipeGestureRecognizerDirection.right {
+            performSegue(withIdentifier: "QuestionToMain", sender: self)
+        }
+        
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let answerView = segue.destination as! AnswerViewController
-        answerView.subject = self.subject
-        answerView.selectedAnswer = self.selectedAnswer
-        answerView.question = self.question
-        answerView.currentQuestion = self.currentQuestion
-        answerView.numberOfQuestions = self.numberOfQuestions
-        answerView.numCorrect = self.numCorrect
+        if segue.identifier == "AnswerSegue" {
+            let answerView = segue.destination as! AnswerViewController
+            answerView.subject = self.subject
+            answerView.selectedAnswer = self.selectedAnswer
+            answerView.question = self.question
+            answerView.currentQuestion = self.currentQuestion
+            answerView.numberOfQuestions = self.numberOfQuestions
+            answerView.numCorrect = self.numCorrect
+        }
     }
 
 }

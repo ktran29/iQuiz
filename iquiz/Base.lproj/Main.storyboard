@@ -66,7 +66,6 @@
                                     <outlet property="descriptionText" destination="ymH-Zc-ax0" id="Xha-Wm-NuT"/>
                                     <outlet property="imageObject" destination="etQ-rT-MxR" id="sdi-uk-oc6"/>
                                     <outlet property="subjectText" destination="8z6-FY-zxr" id="VQe-hh-eoL"/>
-                                    <segue destination="vOe-bp-Tc3" kind="show" id="KhD-j8-1qB"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -84,7 +83,7 @@
         <!--Question-->
         <scene sceneID="x9T-jq-b6Z">
             <objects>
-                <viewController title="Question" id="vOe-bp-Tc3" customClass="QuestionViewController" customModule="iquiz" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="QuestionView" title="Question" id="vOe-bp-Tc3" customClass="QuestionViewController" customModule="iquiz" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lfa-ge-SGO">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -99,7 +98,7 @@
                                 <rect key="frame" x="50" y="537" width="275" height="30"/>
                                 <state key="normal" title="Submit"/>
                                 <connections>
-                                    <segue destination="F4T-NR-dnk" kind="show" id="87B-Xm-l0O"/>
+                                    <segue destination="F4T-NR-dnk" kind="show" identifier="AnswerSegue" id="87B-Xm-l0O"/>
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="MRw-w3-rq0">
@@ -170,6 +169,7 @@
                         <outlet property="answerButton4" destination="XJ8-3f-kSU" id="OSd-9k-9uG"/>
                         <outlet property="questionText" destination="8Qd-YO-DU3" id="dXf-Ut-Bsq"/>
                         <outlet property="submitButton" destination="IGB-gW-YFc" id="NLB-Au-T9m"/>
+                        <segue destination="H9h-4F-oet" kind="show" identifier="QuestionToMain" id="pr2-fc-iRQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oEn-VF-ClM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -254,6 +254,7 @@
                         <outlet property="questionText" destination="06r-vQ-2xa" id="oBd-pM-CDb"/>
                         <segue destination="scZ-dd-lyq" kind="show" identifier="FinishSegue" id="wNC-4l-XQP"/>
                         <segue destination="vOe-bp-Tc3" kind="show" identifier="QuestionSegue" id="t5k-Yu-hZS"/>
+                        <segue destination="H9h-4F-oet" kind="show" identifier="AnswerToMain" id="9dg-AI-1Ve"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mY3-Go-UEh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -285,7 +286,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Next"/>
                                 <connections>
-                                    <segue destination="H9h-4F-oet" kind="show" id="0dd-L9-OTU"/>
+                                    <segue destination="H9h-4F-oet" kind="show" identifier="FinishToMain" id="0dd-L9-OTU"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -327,7 +328,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="KhD-j8-1qB"/>
-        <segue reference="0dd-L9-OTU"/>
+        <segue reference="87B-Xm-l0O"/>
+        <segue reference="pr2-fc-iRQ"/>
     </inferredMetricsTieBreakers>
 </document>

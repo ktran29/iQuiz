@@ -42,12 +42,10 @@ class TableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return subjects.count
     }
 
@@ -63,15 +61,13 @@ class TableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        subject = indexPath.row
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let questionView = segue.destination as! QuestionViewController
-        questionView.subject = subjects[subject]
+        self.subject = indexPath.row
+        let questionView = self.storyboard?.instantiateViewController(withIdentifier: "QuestionView") as! QuestionViewController
+        questionView.subject = subjects[self.subject]
         questionView.currentQuestion = 0
-        questionView.numberOfQuestions = subjects[subject].questions.count
+        questionView.numberOfQuestions = subjects[self.subject].questions.count
         questionView.numCorrect = 0
+        self.navigationController?.pushViewController(questionView, animated: true)
     }
 
     @IBAction func settingsClicked(_ sender: UIButton) {

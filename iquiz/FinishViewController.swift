@@ -22,6 +22,13 @@ class FinishViewController: UIViewController {
         self.navigationItem.hidesBackButton = true
         self.navigationItem.title = "\(subject!) Quiz"
         
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.handleGesture(gesture:)))
+        swipeLeft.direction = .left
+        self.view.addGestureRecognizer(swipeLeft)
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.handleGesture(gesture:)))
+        swipeRight.direction = .right
+        self.view.addGestureRecognizer(swipeRight)
+        
         let score : Double = Double(numCorrect!) / Double(numberOfQuestions!)
         
         scoreLabel.text = "You got \(numCorrect!) of \(numberOfQuestions!) questions correct"
@@ -40,5 +47,9 @@ class FinishViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @objc func handleGesture(gesture: UISwipeGestureRecognizer) -> Void {
+        performSegue(withIdentifier: "FinishToMain", sender: self)
     }
 }

@@ -28,6 +28,13 @@ class AnswerViewController: UIViewController {
         self.navigationItem.hidesBackButton = true
         self.navigationItem.title = "\((subject?.subject)!) Quiz"
         
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.handleGesture(gesture:)))
+        swipeLeft.direction = .left
+        self.view.addGestureRecognizer(swipeLeft)
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.handleGesture(gesture:)))
+        swipeRight.direction = .right
+        self.view.addGestureRecognizer(swipeRight)
+        
         let answer = subject?.questions[currentQuestion!].correctIndex
         questionText.text = question
         setAnswers()
@@ -69,13 +76,26 @@ class AnswerViewController: UIViewController {
         }
     }
     
+    @objc func handleGesture(gesture: UISwipeGestureRecognizer) -> Void {
+        if gesture.direction == UISwipeGestureRecognizerDirection.left {
+            if currentQuestion! >= numberOfQuestions! {
+                performSegue(withIdentifier: "FinishSegue", sender: self)
+            } else {
+                performSegue(withIdentifier: "QuestionSegue", sender: self)
+            }
+        } else if gesture.direction == UISwipeGestureRecognizerDirection.right {
+            performSegue(withIdentifier: "AnswerToMain", sender: self)
+        }
+        
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "FinishSegue" {
             let finishView = segue.destination as! FinishViewController
             finishView.numCorrect = self.numCorrect
             finishView.numberOfQuestions = self.numberOfQuestions
             finishView.subject = self.subject?.subject
-        } else {
+        } else if segue.identifier == "QuestionSegue" {
             let questionView = segue.destination as! QuestionViewController
             questionView.subject = self.subject
             questionView.currentQuestion = self.currentQuestion!
