@@ -10,8 +10,6 @@ import UIKit
 
 class TableViewCell: UITableViewCell {
     
-
-    
     @IBOutlet weak var imageObject: UIImageView!
     @IBOutlet weak var subjectText: UILabel!
     @IBOutlet weak var descriptionText: UILabel!

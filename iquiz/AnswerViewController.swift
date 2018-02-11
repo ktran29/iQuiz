@@ -10,10 +10,36 @@ import UIKit
 
 class AnswerViewController: UIViewController {
 
+    @IBOutlet weak var questionText: UILabel!
+    @IBOutlet weak var answerButton1: UIButton!
+    @IBOutlet weak var answerButton2: UIButton!
+    @IBOutlet weak var answerButton3: UIButton!
+    @IBOutlet weak var answerButton4: UIButton!
+    
+    var subject : SubjectItem?
+    var selectedAnswer : Int?
+    var question : String?
+    var currentQuestion : Int?
+    var numberOfQuestions : Int?
+    var numCorrect : Int?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        self.navigationItem.hidesBackButton = true
+        self.navigationItem.title = "\((subject?.subject)!) Quiz"
+        
+        let answer = subject?.questions[currentQuestion!].correctIndex
+        questionText.text = question
+        setAnswers()
+        setButtonColors()
+        
+        if selectedAnswer != answer {
+            self.view.viewWithTag(selectedAnswer! + 1)?.backgroundColor = UIColor.red
+        } else {
+            numCorrect! += 1
+        }
+        self.view.viewWithTag(answer! + 1)?.backgroundColor = UIColor.green
+        currentQuestion! += 1
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,15 +47,42 @@ class AnswerViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func setAnswers() {
+        answerButton1.setTitle(subject?.questions[0].answers[0], for: .normal)
+        answerButton2.setTitle(subject?.questions[0].answers[1], for: .normal)
+        answerButton3.setTitle(subject?.questions[0].answers[2], for: .normal)
+        answerButton4.setTitle(subject?.questions[0].answers[3], for: .normal)
     }
-    */
+    
+    func setButtonColors() {
+        answerButton1.setTitleColor(UIColor.black, for: .normal)
+        answerButton2.setTitleColor(UIColor.black, for: .normal)
+        answerButton3.setTitleColor(UIColor.black, for: .normal)
+        answerButton4.setTitleColor(UIColor.black, for: .normal)
+    }
+    
+    @IBAction func nextButtonPressed(_ sender: UIButton) {
+        if currentQuestion! >= numberOfQuestions! {
+            performSegue(withIdentifier: "FinishSegue", sender: self)
+        } else {
+            performSegue(withIdentifier: "QuestionSegue", sender: self)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "FinishSegue" {
+            let finishView = segue.destination as! FinishViewController
+            finishView.numCorrect = self.numCorrect
+            finishView.numberOfQuestions = self.numberOfQuestions
+            finishView.subject = self.subject?.subject
+        } else {
+            let questionView = segue.destination as! QuestionViewController
+            questionView.subject = self.subject
+            questionView.currentQuestion = self.currentQuestion!
+            questionView.numberOfQuestions = self.numberOfQuestions
+            questionView.numCorrect = self.numCorrect
+        }
+    }
+    
 
 }

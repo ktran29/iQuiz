@@ -134,9 +134,8 @@
                                                     <action selector="answerOnClick:" destination="vOe-bp-Tc3" eventType="touchUpInside" id="Ib9-V5-UxO"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XJ8-3f-kSU">
+                                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XJ8-3f-kSU">
                                                 <rect key="frame" x="0.0" y="80" width="125" height="30"/>
-                                                <size key="titleShadowOffset" width="0.0" height="3"/>
                                                 <state key="normal" title="A4"/>
                                                 <connections>
                                                     <action selector="answerOnClick:" destination="vOe-bp-Tc3" eventType="touchUpInside" id="ZRw-ej-keb"/>
@@ -188,6 +187,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8hd-A5-nbn">
                                 <rect key="frame" x="50" y="537" width="275" height="30"/>
                                 <state key="normal" title="Next"/>
+                                <connections>
+                                    <action selector="nextButtonPressed:" destination="F4T-NR-dnk" eventType="touchUpInside" id="1Ho-fw-mUb"/>
+                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="GLr-w7-cPs">
                                 <rect key="frame" x="50" y="278" width="275" height="110"/>
@@ -195,11 +197,11 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="zC9-Qs-78V">
                                         <rect key="frame" x="0.0" y="0.0" width="125" height="110"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="34e-an-z5l">
+                                            <button opaque="NO" tag="1" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="34e-an-z5l">
                                                 <rect key="frame" x="0.0" y="0.0" width="125" height="30"/>
                                                 <state key="normal" title="A1"/>
                                             </button>
-                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="szr-SZ-hfP">
+                                            <button opaque="NO" tag="3" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="szr-SZ-hfP">
                                                 <rect key="frame" x="0.0" y="80" width="125" height="30"/>
                                                 <state key="normal" title="A3"/>
                                             </button>
@@ -208,11 +210,11 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="ckl-dO-9OG">
                                         <rect key="frame" x="150" y="0.0" width="125" height="110"/>
                                         <subviews>
-                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Xj-ZS-PVj">
+                                            <button opaque="NO" tag="2" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Xj-ZS-PVj">
                                                 <rect key="frame" x="0.0" y="0.0" width="125" height="30"/>
                                                 <state key="normal" title="A2"/>
                                             </button>
-                                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sg4-qm-cgS">
+                                            <button opaque="NO" tag="4" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sg4-qm-cgS">
                                                 <rect key="frame" x="0.0" y="80" width="125" height="30"/>
                                                 <state key="normal" title="A4"/>
                                             </button>
@@ -245,8 +247,13 @@
                         <viewLayoutGuide key="safeArea" id="fWG-RS-Mcm"/>
                     </view>
                     <connections>
-                        <segue destination="scZ-dd-lyq" kind="show" identifier="FinishScreen" id="wNC-4l-XQP"/>
-                        <segue destination="vOe-bp-Tc3" kind="show" identifier="QuestionScreen" id="t5k-Yu-hZS"/>
+                        <outlet property="answerButton1" destination="34e-an-z5l" id="nax-Pl-3Ge"/>
+                        <outlet property="answerButton2" destination="3Xj-ZS-PVj" id="Mc8-6d-6wC"/>
+                        <outlet property="answerButton3" destination="szr-SZ-hfP" id="BKa-ZN-YmK"/>
+                        <outlet property="answerButton4" destination="sg4-qm-cgS" id="1in-d0-iEM"/>
+                        <outlet property="questionText" destination="06r-vQ-2xa" id="oBd-pM-CDb"/>
+                        <segue destination="scZ-dd-lyq" kind="show" identifier="FinishSegue" id="wNC-4l-XQP"/>
+                        <segue destination="vOe-bp-Tc3" kind="show" identifier="QuestionSegue" id="t5k-Yu-hZS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mY3-Go-UEh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -293,6 +300,10 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="kXO-ou-fs1"/>
                     </view>
+                    <connections>
+                        <outlet property="descriptionLabel" destination="Trs-qo-syX" id="Ms3-r3-xeC"/>
+                        <outlet property="scoreLabel" destination="onh-FZ-Kkk" id="Si2-DS-uPd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1jS-M5-qEW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -316,8 +327,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="87B-Xm-l0O"/>
-        <segue reference="t5k-Yu-hZS"/>
+        <segue reference="KhD-j8-1qB"/>
         <segue reference="0dd-L9-OTU"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -10,8 +10,6 @@ import UIKit
 
 class QuestionViewController: UIViewController {
     
-    var subject : SubjectItem?
-    var selectedAnswer : Int = 0
     @IBOutlet weak var questionText: UILabel!
     @IBOutlet weak var answerButton1: UIButton!
     @IBOutlet weak var answerButton2: UIButton!
@@ -19,15 +17,23 @@ class QuestionViewController: UIViewController {
     @IBOutlet weak var answerButton4: UIButton!
     @IBOutlet weak var submitButton: UIButton!
     
+    var subject : SubjectItem?
+    var selectedAnswer : Int = 0
+    var question : String = ""
+    var currentQuestion : Int?
+    var numberOfQuestions : Int?
+    var numCorrect : Int?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.hidesBackButton = true
-        self.navigationItem.title = subject?.subject
-        questionText.text = subject?.questions[0].question
+        self.navigationItem.title = "\((subject?.subject)!) Quiz"
+        
+        question = (subject?.questions[currentQuestion!].question)!
+        questionText.text = question
         setAnswers()
         resetButtonColors()
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -37,8 +43,7 @@ class QuestionViewController: UIViewController {
     
     @IBAction func answerOnClick(_ sender: UIButton) {
         resetButtonColors()
-        sender.setTitleColor(UIColor.blue, for: .normal)
-        
+        sender.setTitleColor(UIColor.black, for: .normal)
         submitButton.isEnabled = true
         selectedAnswer = sender.tag
     }
@@ -51,10 +56,20 @@ class QuestionViewController: UIViewController {
     }
     
     func resetButtonColors() {
-        answerButton1.setTitleColor(UIColor.gray, for: .normal)
-        answerButton2.setTitleColor(UIColor.gray, for: .normal)
-        answerButton3.setTitleColor(UIColor.gray, for: .normal)
-        answerButton4.setTitleColor(UIColor.gray, for: .normal)
+        answerButton1.setTitleColor(UIColor.lightGray, for: .normal)
+        answerButton2.setTitleColor(UIColor.lightGray, for: .normal)
+        answerButton3.setTitleColor(UIColor.lightGray, for: .normal)
+        answerButton4.setTitleColor(UIColor.lightGray, for: .normal)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let answerView = segue.destination as! AnswerViewController
+        answerView.subject = self.subject
+        answerView.selectedAnswer = self.selectedAnswer
+        answerView.question = self.question
+        answerView.currentQuestion = self.currentQuestion
+        answerView.numberOfQuestions = self.numberOfQuestions
+        answerView.numCorrect = self.numCorrect
     }
 
 }
