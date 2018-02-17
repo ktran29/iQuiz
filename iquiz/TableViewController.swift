@@ -16,30 +16,62 @@ class TableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.hidesBackButton = true
-
-        let math = SubjectItem("Mathematics", "This quiz is about math", "math")
-        let mathQuestion = QuestionObject(1, "What is 1 + 1?", ["1", "2", "3", "4"])
-        let mathQuestion2 = QuestionObject(2, "What is 1 + 2?", ["1", "2", "3", "4"])
-        let mathQuestion3 = QuestionObject(3, "What is 1 + 3?", ["1", "2", "3", "4"])
-        math.questions = [mathQuestion, mathQuestion2, mathQuestion3]
-        
-        let marvel = SubjectItem("Marvel Super Heroes", "This quiz is about Marvel superheroes", "marvel")
-        marvel.questions = [mathQuestion]
-        let science = SubjectItem("Science", "This quiz is about science", "science")
-        science.questions = [mathQuestion]
-        
-        subjects = [math, marvel, science]
-    
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        self.downloadData(urlToRequest: "https://tednewardsandbox.site44.com/questions.json")
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
-    // MARK: - Table view data source
+    func downloadData(urlToRequest: String) -> Void {
+        let requestURL : NSURL = NSURL(string: urlToRequest)!
+        let urlRequest : NSMutableURLRequest = NSMutableURLRequest(url: requestURL as URL)
+        
+        URLSession.shared.dataTask(with: urlRequest as URLRequest, completionHandler: {(data, response, error) -> Void in
+            let jsonData = try? JSONSerialization.jsonObject(with: data!, options: []) as! NSArray
+            
+            if (jsonData != nil) {
+                
+                for index in 0...jsonData!.count - 1 {
+                    let subjectData = jsonData![index] as! NSDictionary
+                    let title = subjectData.value(forKey: "title") as! String
+                    let desc = subjectData.value(forKey: "desc") as! String
+                    let subjectObject = SubjectItem(title, desc, "icon\(index)")
+                    let questionData = subjectData.value(forKey: "questions") as! NSArray
+                    var questions : [QuestionObject] = []
+                    
+                    for questionIndex in 0...questionData.count - 1{
+                        let question = questionData[questionIndex] as! NSDictionary
+                        let answer = Int(question.value(forKey: "answer") as! String)
+                        let text = question.value(forKey: "text") as! String
+                        let answers = question.value(forKey: "answers") as! [String]
+                        let questionObject = QuestionObject(answer!, text, answers)
+                        questions.append(questionObject)
+                    }
+                    subjectObject.questions = questions
+                    self.subjects.append(subjectObject)
+                }
+            } else {
+                let math = SubjectItem("Mathematics", "This quiz is about math", "icon2")
+                let mathQuestion = QuestionObject(1, "What is 1 + 1?", ["1", "2", "3", "4"])
+                let mathQuestion2 = QuestionObject(2, "What is 1 + 2?", ["1", "2", "3", "4"])
+                let mathQuestion3 = QuestionObject(3, "What is 1 + 3?", ["1", "2", "3", "4"])
+                math.questions = [mathQuestion, mathQuestion2, mathQuestion3]
+                
+                let marvel = SubjectItem("Marvel Super Heroes", "This quiz is about Marvel superheroes", "icon1")
+                marvel.questions = [mathQuestion]
+                let science = SubjectItem("Science", "This quiz is about science", "icon0")
+                science.questions = [mathQuestion]
+                
+                self.subjects = [math, marvel, science]
+            }
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+            
+        }).resume()
+    }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
