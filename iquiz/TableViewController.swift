@@ -7,17 +7,19 @@
 //
 
 import UIKit
+import SystemConfiguration
 
 class TableViewController: UITableViewController, UIPopoverPresentationControllerDelegate {
     
     let defaults = UserDefaults.standard
     var refresher: UIRefreshControl!
-    var url = "https://tednewardsandbox.site44.com/questions.jsons"
+    var url = "https://tednewardsandbox.site44.com/questions.json"
     var subjects : [SubjectItem] = []
     var subject : Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.hidesBackButton = true
         
         defaults.register(defaults: [String : Any]())
         
@@ -25,18 +27,15 @@ class TableViewController: UITableViewController, UIPopoverPresentationControlle
         refresher.addTarget(self, action: #selector(refreshTable), for: UIControlEvents.valueChanged)
         tableView.addSubview(refresher)
         
-        self.navigationItem.hidesBackButton = true
-        
-        if (defaults.value(forKey: "urlToRequest") != nil) {
+        if defaults.value(forKey: "urlToRequest") != nil {
             url = defaults.value(forKey: "urlToRequest") as! String
         }
         
+        if !self.isConnectedToNetwork() {
+            self.notifyUserOfNetwork()
+        }
+        
         self.downloadData(urlToRequest: url)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -132,8 +131,6 @@ class TableViewController: UITableViewController, UIPopoverPresentationControlle
         let popover = popoverVC.popoverPresentationController
         popover!.delegate = self
         popover!.barButtonItem = sender
-        
-        
         self.present(popoverVC, animated: true, completion: nil)
         
     }
@@ -144,9 +141,42 @@ class TableViewController: UITableViewController, UIPopoverPresentationControlle
     
     @objc func refreshTable() {
         subjects = []
-        self.tableView.reloadData()
-        self.downloadData(urlToRequest: url)
-        refresher.endRefreshing()
+        self.refresher.endRefreshing()
+        if !isConnectedToNetwork() {
+            self.notifyUserOfNetwork()
+        } else {
+            self.downloadData(urlToRequest: self.url)
+        }
+    }
+    
+    func isConnectedToNetwork() -> Bool {
+        
+        var zeroAddress = sockaddr_in(sin_len: 0, sin_family: 0, sin_port: 0, sin_addr: in_addr(s_addr: 0), sin_zero: (0, 0, 0, 0, 0, 0, 0, 0))
+        zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
+        zeroAddress.sin_family = sa_family_t(AF_INET)
+        let defaultRouteReachability = withUnsafePointer(to: &zeroAddress) {
+            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {zeroSockAddress in
+                SCNetworkReachabilityCreateWithAddress(nil, zeroSockAddress)
+            }
+        }
+        
+        var flags = SCNetworkReachabilityFlags()
+        if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {
+            return false
+        }
+        let isReachable = (flags.rawValue & UInt32(kSCNetworkFlagsReachable)) != 0
+        let needsConnection = (flags.rawValue & UInt32(kSCNetworkFlagsConnectionRequired)) != 0
+        
+        return (isReachable && !needsConnection)
+        
+    }
+    
+    func notifyUserOfNetwork() {
+        let alert = UIAlertController(title: "Notification",
+                                      message:"Network is currently unavailable",
+            preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
     
 }
