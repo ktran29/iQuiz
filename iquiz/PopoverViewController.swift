@@ -17,8 +17,6 @@ class PopoverViewController: UIViewController {
         
         let urlToRequest = UserDefaults.standard.value(forKey: "urlToRequest")
         
-        print(urlToRequest)
-        
         if (urlToRequest != nil) {
             urlText.text = urlToRequest as! String
         }

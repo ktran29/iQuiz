@@ -10,12 +10,21 @@ import UIKit
 
 class TableViewController: UITableViewController, UIPopoverPresentationControllerDelegate {
     
+    
+    var refresher: UIRefreshControl!
     var url = "https://tednewardsandbox.site44.com/questions.jsons"
     var subjects : [SubjectItem] = []
     var subject : Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        refresher = UIRefreshControl()
+        refresher.attributedTitle = NSAttributedString(string: "Pull down to refresh")
+        refresher.addTarget(self, action: #selector(refreshTable), for: UIControlEvents.valueChanged)
+        tableView.addSubview(refresher)
+        
+        
         self.navigationItem.hidesBackButton = true
         
         if (UserDefaults.standard.value(forKey: "urlToRequest") != nil) {
@@ -26,7 +35,6 @@ class TableViewController: UITableViewController, UIPopoverPresentationControlle
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print("here")
         super.viewWillAppear(animated)
         self.tableView.reloadData()
     }
@@ -134,6 +142,12 @@ class TableViewController: UITableViewController, UIPopoverPresentationControlle
     
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
+    }
+    
+    @objc func refreshTable() {
+        self.tableView.reloadData()
+        self.downloadData(urlToRequest: url)
+        refresher.endRefreshing()
     }
     
 }
