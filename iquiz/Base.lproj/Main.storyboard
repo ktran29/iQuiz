@@ -188,7 +188,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter URL Here" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uYt-Z8-5tO">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uYt-Z8-5tO">
                                         <rect key="frame" x="0.0" y="30" width="275" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -198,7 +198,7 @@
                                         <rect key="frame" x="0.0" y="60" width="275" height="30"/>
                                         <state key="normal" title="Check Now"/>
                                         <connections>
-                                            <action selector="checkURL:" destination="O8h-oW-KpJ" eventType="touchUpInside" id="Ii3-ci-McK"/>
+                                            <action selector="reloadData:" destination="O8h-oW-KpJ" eventType="touchUpInside" id="pXy-4l-Fd1"/>
                                         </connections>
                                     </button>
                                 </subviews>

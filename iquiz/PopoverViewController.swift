@@ -14,6 +14,14 @@ class PopoverViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let urlToRequest = UserDefaults.standard.value(forKey: "urlToRequest")
+        
+        print(urlToRequest)
+        
+        if (urlToRequest != nil) {
+            urlText.text = urlToRequest as! String
+        }
 
         // Do any additional setup after loading the view.
     }
@@ -23,12 +31,14 @@ class PopoverViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func checkURL(_ sender: UIButton) {
-        let tableViewController = storyboard?.instantiateViewController(withIdentifier: "tableViewController") as! TableViewController
-        AppData.shared.urlToRequest = urlText.text!
-        tableViewController.viewDidLoad()
-    
+    @IBAction func reloadData(_ sender: UIButton) {
         
+        UserDefaults.standard.setValue(self.urlText.text!, forKey: "urlToRequest")
+        
+        let tableViewController = self.storyboard?.instantiateViewController(withIdentifier: "tableViewController") as! TableViewController
+        tableViewController.url = self.urlText.text!
+        tableViewController.downloadData(urlToRequest: self.urlText.text!)
+        tableViewController.viewWillAppear(true)
         self.presentingViewController!.dismiss(animated: true, completion: nil)
     }
 

@@ -17,7 +17,18 @@ class TableViewController: UITableViewController, UIPopoverPresentationControlle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.hidesBackButton = true
+        
+        if (UserDefaults.standard.value(forKey: "urlToRequest") != nil) {
+            url = UserDefaults.standard.value(forKey: "urlToRequest") as! String
+        }
+        
         self.downloadData(urlToRequest: url)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        print("here")
+        super.viewWillAppear(animated)
+        self.tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,14 +41,18 @@ class TableViewController: UITableViewController, UIPopoverPresentationControlle
         let task = URLSession.shared.dataTask(with: urlString!) { (data, response, error) in
             var jsonData : NSArray = []
             let fileManager = FileManager.default
+            let path = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("questions.json")
+            let content = NSData(contentsOf: path)
             if let data = data {
                 do {
                     jsonData = (try JSONSerialization.jsonObject(with: data, options: []) as? NSArray)!
                     do {
-                        try jsonData.write(to: fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("questions.json"))
+                        try jsonData.write(to: path)
                     }
                 }  catch {
-                    jsonData = NSArray(contentsOf: fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("questions.json"))!
+                    if (content != nil) {
+                        jsonData = NSArray(contentsOf: path)!
+                    }
                 }
             } else if let error = error {
                 print(error.localizedDescription)
@@ -104,16 +119,17 @@ class TableViewController: UITableViewController, UIPopoverPresentationControlle
     }
     
     @IBAction func settingsClicked(_ sender: UIBarButtonItem) {
-        let popoverVC = storyboard?.instantiateViewController(withIdentifier: "popoverViewController") as! PopoverViewController
+        
+        let popoverVC = self.storyboard?.instantiateViewController(withIdentifier: "popoverViewController") as! PopoverViewController
+        popoverVC.modalPresentationStyle = UIModalPresentationStyle.popover
         popoverVC.preferredContentSize = CGSize(width: UIScreen.main.bounds.width, height: 150)
-        let navController = UINavigationController(rootViewController: popoverVC)
-        navController.modalPresentationStyle = UIModalPresentationStyle.popover
+        let popover = popoverVC.popoverPresentationController
+        popover!.delegate = self
+        popover!.barButtonItem = sender
         
-        let popover = navController.popoverPresentationController
-        popover?.delegate = self
-        popover?.barButtonItem = sender
         
-        self.present(navController, animated: true, completion: nil)
+        self.present(popoverVC, animated: true, completion: nil)
+        
     }
     
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
