@@ -40,22 +40,24 @@ class TableViewController: UITableViewController {
                     let questionData = subjectData.value(forKey: "questions") as! NSArray
                     var questions : [QuestionObject] = []
                     
-                    for questionIndex in 0...questionData.count - 1{
+                    for questionIndex in 0...questionData.count - 1 {
                         let question = questionData[questionIndex] as! NSDictionary
                         let answer = Int(question.value(forKey: "answer") as! String)
                         let text = question.value(forKey: "text") as! String
                         let answers = question.value(forKey: "answers") as! [String]
                         let questionObject = QuestionObject(answer!, text, answers)
+                        
                         questions.append(questionObject)
                     }
+                    
                     subjectObject.questions = questions
                     self.subjects.append(subjectObject)
                 }
             } else {
                 let math = SubjectItem("Mathematics", "This quiz is about math", "icon2")
-                let mathQuestion = QuestionObject(1, "What is 1 + 1?", ["1", "2", "3", "4"])
-                let mathQuestion2 = QuestionObject(2, "What is 1 + 2?", ["1", "2", "3", "4"])
-                let mathQuestion3 = QuestionObject(3, "What is 1 + 3?", ["1", "2", "3", "4"])
+                let mathQuestion = QuestionObject(2, "What is 1 + 1?", ["1", "2", "3", "4"])
+                let mathQuestion2 = QuestionObject(3, "What is 1 + 2?", ["1", "2", "3", "4"])
+                let mathQuestion3 = QuestionObject(4, "What is 1 + 3?", ["1", "2", "3", "4"])
                 math.questions = [mathQuestion, mathQuestion2, mathQuestion3]
                 
                 let marvel = SubjectItem("Marvel Super Heroes", "This quiz is about Marvel superheroes", "icon1")

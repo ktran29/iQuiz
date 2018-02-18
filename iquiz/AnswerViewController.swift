@@ -35,7 +35,7 @@ class AnswerViewController: UIViewController {
         swipeRight.direction = .right
         self.view.addGestureRecognizer(swipeRight)
         
-        let answer = subject?.questions[currentQuestion!].correctIndex
+        let answer = (subject?.questions[currentQuestion!].correctIndex)! - 1
         questionText.text = question
         setAnswers()
         setButtonColors()
@@ -45,7 +45,7 @@ class AnswerViewController: UIViewController {
         } else {
             numCorrect! += 1
         }
-        self.view.viewWithTag(answer! + 1)?.backgroundColor = UIColor.green
+        self.view.viewWithTag(answer + 1)?.backgroundColor = UIColor.green
         currentQuestion! += 1
     }
 

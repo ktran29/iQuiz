@@ -107,14 +107,14 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="F18-vz-mF2">
                                         <rect key="frame" x="0.0" y="0.0" width="125" height="110"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vvO-Tx-o6k">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="vvO-Tx-o6k">
                                                 <rect key="frame" x="0.0" y="0.0" width="125" height="30"/>
                                                 <state key="normal" title="A1"/>
                                                 <connections>
                                                     <action selector="answerOnClick:" destination="vOe-bp-Tc3" eventType="touchUpInside" id="aDd-Ea-Trg"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BNk-cO-TFF">
+                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="BNk-cO-TFF">
                                                 <rect key="frame" x="0.0" y="80" width="125" height="30"/>
                                                 <state key="normal" title="A3"/>
                                                 <connections>
@@ -126,14 +126,14 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="jhu-fl-Maj">
                                         <rect key="frame" x="150" y="0.0" width="125" height="110"/>
                                         <subviews>
-                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AOu-e4-wEq">
+                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="AOu-e4-wEq">
                                                 <rect key="frame" x="0.0" y="0.0" width="125" height="30"/>
                                                 <state key="normal" title="A2"/>
                                                 <connections>
                                                     <action selector="answerOnClick:" destination="vOe-bp-Tc3" eventType="touchUpInside" id="Ib9-V5-UxO"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XJ8-3f-kSU">
+                                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="XJ8-3f-kSU">
                                                 <rect key="frame" x="0.0" y="80" width="125" height="30"/>
                                                 <state key="normal" title="A4"/>
                                                 <connections>
@@ -197,11 +197,11 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="zC9-Qs-78V">
                                         <rect key="frame" x="0.0" y="0.0" width="125" height="110"/>
                                         <subviews>
-                                            <button opaque="NO" tag="1" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="34e-an-z5l">
+                                            <button opaque="NO" tag="1" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="34e-an-z5l">
                                                 <rect key="frame" x="0.0" y="0.0" width="125" height="30"/>
                                                 <state key="normal" title="A1"/>
                                             </button>
-                                            <button opaque="NO" tag="3" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="szr-SZ-hfP">
+                                            <button opaque="NO" tag="3" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="szr-SZ-hfP">
                                                 <rect key="frame" x="0.0" y="80" width="125" height="30"/>
                                                 <state key="normal" title="A3"/>
                                             </button>
@@ -210,11 +210,11 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="ckl-dO-9OG">
                                         <rect key="frame" x="150" y="0.0" width="125" height="110"/>
                                         <subviews>
-                                            <button opaque="NO" tag="2" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Xj-ZS-PVj">
+                                            <button opaque="NO" tag="2" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="3Xj-ZS-PVj">
                                                 <rect key="frame" x="0.0" y="0.0" width="125" height="30"/>
                                                 <state key="normal" title="A2"/>
                                             </button>
-                                            <button opaque="NO" tag="4" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sg4-qm-cgS">
+                                            <button opaque="NO" tag="4" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="sg4-qm-cgS">
                                                 <rect key="frame" x="0.0" y="80" width="125" height="30"/>
                                                 <state key="normal" title="A4"/>
                                             </button>

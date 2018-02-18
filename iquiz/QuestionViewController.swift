@@ -59,10 +59,10 @@ class QuestionViewController: UIViewController {
     }
     
     func setAnswers() {
-        answerButton1.setTitle(subject?.questions[0].answers[0], for: .normal)
-        answerButton2.setTitle(subject?.questions[0].answers[1], for: .normal)
-        answerButton3.setTitle(subject?.questions[0].answers[2], for: .normal)
-        answerButton4.setTitle(subject?.questions[0].answers[3], for: .normal)
+        answerButton1.setTitle(subject?.questions[currentQuestion!].answers[0], for: .normal)
+        answerButton2.setTitle(subject?.questions[currentQuestion!].answers[1], for: .normal)
+        answerButton3.setTitle(subject?.questions[currentQuestion!].answers[2], for: .normal)
+        answerButton4.setTitle(subject?.questions[currentQuestion!].answers[3], for: .normal)
     }
     
     func resetButtonColors() {
