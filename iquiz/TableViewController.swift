@@ -54,18 +54,16 @@ class TableViewController: UITableViewController {
                     self.subjects.append(subjectObject)
                 }
             } else {
-                let math = SubjectItem("Mathematics", "This quiz is about math", "icon2")
-                let mathQuestion = QuestionObject(2, "What is 1 + 1?", ["1", "2", "3", "4"])
-                let mathQuestion2 = QuestionObject(3, "What is 1 + 2?", ["1", "2", "3", "4"])
-                let mathQuestion3 = QuestionObject(4, "What is 1 + 3?", ["1", "2", "3", "4"])
-                math.questions = [mathQuestion, mathQuestion2, mathQuestion3]
+                let science = SubjectItem("Science", "Chemicals!", "icon0")
+                science.questions = [QuestionObject(3, "Which is the most dangerous?", ["H2O", "NaCl", "NaF", "Hg"])]
                 
-                let marvel = SubjectItem("Marvel Super Heroes", "This quiz is about Marvel superheroes", "icon1")
-                marvel.questions = [mathQuestion]
-                let science = SubjectItem("Science", "This quiz is about science", "icon0")
-                science.questions = [mathQuestion]
+                let marvel = SubjectItem("Marvel Super Heroes", "Marvel > DC", "icon1")
+                marvel.questions = [QuestionObject(1, "Who's the best?", ["Deadpool", "Doctor Strange", "Black Panther", "Groot"])]
+
+                let math = SubjectItem("Mathematics", "Math is kinda fun", "icon2")
+                math.questions = [QuestionObject(2, "What is 1 + 1?", ["1", "2", "3", "4"])]
                 
-                self.subjects = [math, marvel, science]
+                self.subjects = [science, marvel, math]
             }
             
             DispatchQueue.main.async {
