@@ -94,7 +94,6 @@ class TableViewController: UITableViewController, UIPopoverPresentationControlle
                         
                         questions.append(questionObject)
                     }
-                    
                     subjectObject.questions = questions
                     self.subjects.append(subjectObject)
                 }
