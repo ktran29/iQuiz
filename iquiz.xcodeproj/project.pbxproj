@@ -19,8 +19,8 @@
 		65240F97202F9FCD00D24C46 /* AnswerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65240F96202F9FCD00D24C46 /* AnswerViewController.swift */; };
 		65240F99202F9FE200D24C46 /* FinishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65240F98202F9FE200D24C46 /* FinishViewController.swift */; };
 		65240F9B202FA02B00D24C46 /* QuestionObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65240F9A202FA02B00D24C46 /* QuestionObject.swift */; };
+		65A5175720398E1900FE503C /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 65A5175620398E1900FE503C /* Settings.bundle */; };
 		65B56A18203918FE00D69E7D /* PopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B56A17203918FE00D69E7D /* PopoverViewController.swift */; };
-		65B56A1A20392D6800D69E7D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 65B56A1920392D6800D69E7D /* Settings.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,8 +38,8 @@
 		65240F96202F9FCD00D24C46 /* AnswerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerViewController.swift; sourceTree = "<group>"; };
 		65240F98202F9FE200D24C46 /* FinishViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishViewController.swift; sourceTree = "<group>"; };
 		65240F9A202FA02B00D24C46 /* QuestionObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionObject.swift; sourceTree = "<group>"; };
+		65A5175620398E1900FE503C /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		65B56A17203918FE00D69E7D /* PopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverViewController.swift; sourceTree = "<group>"; };
-		65B56A1920392D6800D69E7D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +56,7 @@
 		6514F075202EDA1900381BAD = {
 			isa = PBXGroup;
 			children = (
+				65A5175620398E1900FE503C /* Settings.bundle */,
 				6514F080202EDA1900381BAD /* iquiz */,
 				6514F07F202EDA1900381BAD /* Products */,
 			);
@@ -72,7 +73,6 @@
 		6514F080202EDA1900381BAD /* iquiz */ = {
 			isa = PBXGroup;
 			children = (
-				65B56A1920392D6800D69E7D /* Settings.bundle */,
 				6514F081202EDA1900381BAD /* AppDelegate.swift */,
 				6514F083202EDA1900381BAD /* ViewController.swift */,
 				6514F085202EDA1900381BAD /* Main.storyboard */,
@@ -150,7 +150,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65B56A1A20392D6800D69E7D /* Settings.bundle in Resources */,
+				65A5175720398E1900FE503C /* Settings.bundle in Resources */,
 				6514F08C202EDA1900381BAD /* LaunchScreen.storyboard in Resources */,
 				6514F089202EDA1900381BAD /* Assets.xcassets in Resources */,
 				6514F087202EDA1900381BAD /* Main.storyboard in Resources */,

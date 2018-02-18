@@ -10,7 +10,7 @@ import UIKit
 
 class TableViewController: UITableViewController, UIPopoverPresentationControllerDelegate {
     
-    
+    let defaults = UserDefaults.standard
     var refresher: UIRefreshControl!
     var url = "https://tednewardsandbox.site44.com/questions.jsons"
     var subjects : [SubjectItem] = []
@@ -19,16 +19,16 @@ class TableViewController: UITableViewController, UIPopoverPresentationControlle
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        defaults.register(defaults: [String : Any]())
+        
         refresher = UIRefreshControl()
-        refresher.attributedTitle = NSAttributedString(string: "Pull down to refresh")
         refresher.addTarget(self, action: #selector(refreshTable), for: UIControlEvents.valueChanged)
         tableView.addSubview(refresher)
         
-        
         self.navigationItem.hidesBackButton = true
         
-        if (UserDefaults.standard.value(forKey: "urlToRequest") != nil) {
-            url = UserDefaults.standard.value(forKey: "urlToRequest") as! String
+        if (defaults.value(forKey: "urlToRequest") != nil) {
+            url = defaults.value(forKey: "urlToRequest") as! String
         }
         
         self.downloadData(urlToRequest: url)
@@ -62,8 +62,6 @@ class TableViewController: UITableViewController, UIPopoverPresentationControlle
                         jsonData = NSArray(contentsOf: path)!
                     }
                 }
-            } else if let error = error {
-                print(error.localizedDescription)
             }
             if (jsonData.count > 0) {
                 for index in 0...jsonData.count - 1 {
@@ -145,6 +143,7 @@ class TableViewController: UITableViewController, UIPopoverPresentationControlle
     }
     
     @objc func refreshTable() {
+        subjects = []
         self.tableView.reloadData()
         self.downloadData(urlToRequest: url)
         refresher.endRefreshing()
