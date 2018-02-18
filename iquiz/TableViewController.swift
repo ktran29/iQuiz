@@ -12,18 +12,16 @@ import SystemConfiguration
 class TableViewController: UITableViewController, UIPopoverPresentationControllerDelegate {
     
     let defaults = UserDefaults.standard
-    var refresher: UIRefreshControl!
-    var url = "https://tednewardsandbox.site44.com/questions.jsons"
+    var refresher = UIRefreshControl()
+    var url = "https://tednewardsandbox.site44.com/questions.json"
     var subjects : [SubjectItem] = []
     var subject : Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.hidesBackButton = true
-        
         defaults.register(defaults: [String : Any]())
         
-        refresher = UIRefreshControl()
         refresher.addTarget(self, action: #selector(refreshTable), for: UIControlEvents.valueChanged)
         tableView.addSubview(refresher)
         
@@ -39,28 +37,33 @@ class TableViewController: UITableViewController, UIPopoverPresentationControlle
     }
 
     func downloadData() -> Void {
+        
+        // checks to see if user has a stored URL
         if defaults.value(forKey: "urlToRequest") != nil {
             url = defaults.value(forKey: "urlToRequest") as! String
         }
         let urlString = URL(string: url)
+        let config = URLSessionConfiguration.default
+        let session = URLSession.init(configuration: config, delegate: nil, delegateQueue: OperationQueue.current)
         
-        let task = URLSession.shared.dataTask(with: urlString!) { (data, response, error) in
+        let task = session.dataTask(with: urlString!) { (data, response, error) in
             var jsonData : NSArray = []
             let fileManager = FileManager.default
             let path = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("questions.json")
             let content = NSData(contentsOf: path)
-            
             if let response = response as? HTTPURLResponse {
                 if response.statusCode == 200 {
                     do {
                         jsonData = (try JSONSerialization.jsonObject(with: data!, options: []) as? NSArray)!
                         do {
                             try jsonData.write(to: path)
+                        } catch {
+                            if content != nil {
+                                jsonData = NSArray(contentsOf: path)!
+                            }
                         }
-                    }  catch {
-                        if (content != nil) {
-                            jsonData = NSArray(contentsOf: path)!
-                        }
+                    } catch {
+                        self.notifyUser("Unable to write to file")
                     }
                 } else {
                     if let error = error {
@@ -100,6 +103,9 @@ class TableViewController: UITableViewController, UIPopoverPresentationControlle
                     self.tableView.reloadData()
                 }
             }
+            
+            // terminates all outstanding tasks i.e. failed HTTP requests
+            session.invalidateAndCancel()
         }
         
         task.resume()
@@ -143,7 +149,6 @@ class TableViewController: UITableViewController, UIPopoverPresentationControlle
         popover!.delegate = self
         popover!.barButtonItem = sender
         self.present(popoverVC, animated: true, completion: nil)
-        
     }
     
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
@@ -160,11 +165,12 @@ class TableViewController: UITableViewController, UIPopoverPresentationControlle
         }
     }
     
+    // checks network connection, found here: https://stackoverflow.com/questions/39558868/check-internet-connection-ios-10
     func isConnectedToNetwork() -> Bool {
-        
-        var zeroAddress = sockaddr_in(sin_len: 0, sin_family: 0, sin_port: 0, sin_addr: in_addr(s_addr: 0), sin_zero: (0, 0, 0, 0, 0, 0, 0, 0))
+        var zeroAddress = sockaddr_in()
         zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
         zeroAddress.sin_family = sa_family_t(AF_INET)
+        
         let defaultRouteReachability = withUnsafePointer(to: &zeroAddress) {
             $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {zeroSockAddress in
                 SCNetworkReachabilityCreateWithAddress(nil, zeroSockAddress)
@@ -175,9 +181,8 @@ class TableViewController: UITableViewController, UIPopoverPresentationControlle
         if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {
             return false
         }
-        let isReachable = (flags.rawValue & UInt32(kSCNetworkFlagsReachable)) != 0
-        let needsConnection = (flags.rawValue & UInt32(kSCNetworkFlagsConnectionRequired)) != 0
-        
+        let isReachable = flags.contains(.reachable)
+        let needsConnection = flags.contains(.connectionRequired)
         return (isReachable && !needsConnection)
         
     }
