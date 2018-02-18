@@ -8,15 +8,16 @@
 
 import UIKit
 
-class TableViewController: UITableViewController {
+class TableViewController: UITableViewController, UIPopoverPresentationControllerDelegate {
     
+    var url = "https://tednewardsandbox.site44.com/questions.jsons"
     var subjects : [SubjectItem] = []
     var subject : Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.hidesBackButton = true
-        self.downloadData(urlToRequest: "https://tednewardsandbox.site44.com/questions.json")
+        self.downloadData(urlToRequest: url)
     }
 
     override func didReceiveMemoryWarning() {
@@ -24,16 +25,26 @@ class TableViewController: UITableViewController {
     }
 
     func downloadData(urlToRequest: String) -> Void {
-        let requestURL : NSURL = NSURL(string: urlToRequest)!
-        let urlRequest : NSMutableURLRequest = NSMutableURLRequest(url: requestURL as URL)
+        let urlString = URL(string: urlToRequest)
         
-        URLSession.shared.dataTask(with: urlRequest as URLRequest, completionHandler: {(data, response, error) -> Void in
-            let jsonData = try? JSONSerialization.jsonObject(with: data!, options: []) as! NSArray
-            
-            if (jsonData != nil) {
-                
-                for index in 0...jsonData!.count - 1 {
-                    let subjectData = jsonData![index] as! NSDictionary
+        let task = URLSession.shared.dataTask(with: urlString!) { (data, response, error) in
+            var jsonData : NSArray = []
+            let fileManager = FileManager.default
+            if let data = data {
+                do {
+                    jsonData = (try JSONSerialization.jsonObject(with: data, options: []) as? NSArray)!
+                    do {
+                        try jsonData.write(to: fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("questions.json"))
+                    }
+                }  catch {
+                    jsonData = NSArray(contentsOf: fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("questions.json"))!
+                }
+            } else if let error = error {
+                print(error.localizedDescription)
+            }
+            if (jsonData.count > 0) {
+                for index in 0...jsonData.count - 1 {
+                    let subjectData = jsonData[index] as! NSDictionary
                     let title = subjectData.value(forKey: "title") as! String
                     let desc = subjectData.value(forKey: "desc") as! String
                     let subjectObject = SubjectItem(title, desc, "icon\(index)")
@@ -53,24 +64,14 @@ class TableViewController: UITableViewController {
                     subjectObject.questions = questions
                     self.subjects.append(subjectObject)
                 }
-            } else {
-                let science = SubjectItem("Science", "Chemicals!", "icon0")
-                science.questions = [QuestionObject(3, "Which is the most dangerous?", ["H2O", "NaCl", "NaF", "Hg"])]
                 
-                let marvel = SubjectItem("Marvel Super Heroes", "Marvel > DC", "icon1")
-                marvel.questions = [QuestionObject(1, "Who's the best?", ["Deadpool", "Doctor Strange", "Black Panther", "Groot"])]
-
-                let math = SubjectItem("Mathematics", "Math is kinda fun", "icon2")
-                math.questions = [QuestionObject(2, "What is 1 + 1?", ["1", "2", "3", "4"])]
-                
-                self.subjects = [science, marvel, math]
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
             }
-            
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-            
-        }).resume()
+        }
+        
+        task.resume()
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -101,15 +102,22 @@ class TableViewController: UITableViewController {
         questionView.numCorrect = 0
         self.navigationController?.pushViewController(questionView, animated: true)
     }
-
-    @IBAction func settingsClicked(_ sender: UIButton) {
-        let alertVC = UIAlertController(title: "Settings go here",
-                                        message: "",
-                                        preferredStyle: .alert)
-        alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-            alertVC.dismiss(animated: true)
-        }))
-        self.present(alertVC, animated: true)
+    
+    @IBAction func settingsClicked(_ sender: UIBarButtonItem) {
+        let popoverVC = storyboard?.instantiateViewController(withIdentifier: "popoverViewController") as! PopoverViewController
+        popoverVC.preferredContentSize = CGSize(width: UIScreen.main.bounds.width, height: 150)
+        let navController = UINavigationController(rootViewController: popoverVC)
+        navController.modalPresentationStyle = UIModalPresentationStyle.popover
+        
+        let popover = navController.popoverPresentationController
+        popover?.delegate = self
+        popover?.barButtonItem = sender
+        
+        self.present(navController, animated: true, completion: nil)
+    }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
     }
     
 }

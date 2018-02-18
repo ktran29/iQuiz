@@ -13,7 +13,7 @@
         <!--Subjects-->
         <scene sceneID="ag9-0S-JKj">
             <objects>
-                <tableViewController id="H9h-4F-oet" customClass="TableViewController" customModule="iquiz" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="tableViewController" id="H9h-4F-oet" customClass="TableViewController" customModule="iquiz" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="KSh-N0-VO7">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -22,15 +22,10 @@
                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                             <items>
-                                <barButtonItem style="plain" id="luZ-Q4-fKK">
-                                    <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="xUr-Ze-htA">
-                                        <rect key="frame" x="16" y="7" width="343" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Settings"/>
-                                        <connections>
-                                            <action selector="settingsClicked:" destination="H9h-4F-oet" eventType="touchUpInside" id="F4g-8W-vsM"/>
-                                        </connections>
-                                    </button>
+                                <barButtonItem title="Settings" id="7se-g9-HUH">
+                                    <connections>
+                                        <action selector="settingsClicked:" destination="H9h-4F-oet" id="W5x-Yz-Vfg"/>
+                                    </connections>
                                 </barButtonItem>
                             </items>
                         </toolbar>
@@ -175,6 +170,56 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oEn-VF-ClM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="740" y="-663.41829085457277"/>
+        </scene>
+        <!--Popover View Controller-->
+        <scene sceneID="wfq-x3-stY">
+            <objects>
+                <viewController storyboardIdentifier="popoverViewController" id="O8h-oW-KpJ" customClass="PopoverViewController" customModule="iquiz" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="R8v-Vy-GQH">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="3aL-y7-fQ3">
+                                <rect key="frame" x="50" y="288.5" width="275" height="90"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Download Quiz" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="suI-Mm-DYy">
+                                        <rect key="frame" x="0.0" y="0.0" width="275" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter URL Here" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uYt-Z8-5tO">
+                                        <rect key="frame" x="0.0" y="30" width="275" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nOa-WZ-UWE">
+                                        <rect key="frame" x="0.0" y="60" width="275" height="30"/>
+                                        <state key="normal" title="Check Now"/>
+                                        <connections>
+                                            <action selector="checkURL:" destination="O8h-oW-KpJ" eventType="touchUpInside" id="Ii3-ci-McK"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="sWo-NC-v93" firstAttribute="trailing" secondItem="3aL-y7-fQ3" secondAttribute="trailing" constant="50" id="DDK-G3-OUJ"/>
+                            <constraint firstItem="3aL-y7-fQ3" firstAttribute="centerX" secondItem="R8v-Vy-GQH" secondAttribute="centerX" id="RVI-Pp-vUE"/>
+                            <constraint firstItem="3aL-y7-fQ3" firstAttribute="centerY" secondItem="R8v-Vy-GQH" secondAttribute="centerY" id="YNv-Le-buq"/>
+                            <constraint firstItem="3aL-y7-fQ3" firstAttribute="leading" secondItem="sWo-NC-v93" secondAttribute="leading" constant="50" id="lRd-vP-LdL"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="sWo-NC-v93"/>
+                    </view>
+                    <connections>
+                        <outlet property="urlText" destination="uYt-Z8-5tO" id="K6j-JI-Cu8"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tRO-D6-NLE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-228" y="68"/>
         </scene>
         <!--Answer-->
         <scene sceneID="11Z-P5-MfM">
