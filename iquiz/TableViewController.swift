@@ -13,7 +13,7 @@ class TableViewController: UITableViewController, UIPopoverPresentationControlle
     
     let defaults = UserDefaults.standard
     var refresher: UIRefreshControl!
-    var url = "https://tednewardsandbox.site44.com/questions.json"
+    var url = "https://tednewardsandbox.site44.com/questions.jsons"
     var subjects : [SubjectItem] = []
     var subject : Int = 0
     
@@ -27,41 +27,52 @@ class TableViewController: UITableViewController, UIPopoverPresentationControlle
         refresher.addTarget(self, action: #selector(refreshTable), for: UIControlEvents.valueChanged)
         tableView.addSubview(refresher)
         
-        if defaults.value(forKey: "urlToRequest") != nil {
-            url = defaults.value(forKey: "urlToRequest") as! String
-        }
-        
         if !self.isConnectedToNetwork() {
-            self.notifyUserOfNetwork()
+            self.notifyUser("Network is currently unavailable")
         }
         
-        self.downloadData(urlToRequest: url)
+        self.downloadData()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
 
-    func downloadData(urlToRequest: String) -> Void {
-        let urlString = URL(string: urlToRequest)
+    func downloadData() -> Void {
+        if defaults.value(forKey: "urlToRequest") != nil {
+            url = defaults.value(forKey: "urlToRequest") as! String
+        }
+        let urlString = URL(string: url)
         
         let task = URLSession.shared.dataTask(with: urlString!) { (data, response, error) in
             var jsonData : NSArray = []
             let fileManager = FileManager.default
             let path = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("questions.json")
             let content = NSData(contentsOf: path)
-            if let data = data {
-                do {
-                    jsonData = (try JSONSerialization.jsonObject(with: data, options: []) as? NSArray)!
+            
+            if let response = response as? HTTPURLResponse {
+                if response.statusCode == 200 {
                     do {
-                        try jsonData.write(to: path)
+                        jsonData = (try JSONSerialization.jsonObject(with: data!, options: []) as? NSArray)!
+                        do {
+                            try jsonData.write(to: path)
+                        }
+                    }  catch {
+                        if (content != nil) {
+                            jsonData = NSArray(contentsOf: path)!
+                        }
                     }
-                }  catch {
-                    if (content != nil) {
-                        jsonData = NSArray(contentsOf: path)!
+                } else {
+                    if let error = error {
+                        self.notifyUser(error.localizedDescription)
+                    } else {
+                        self.notifyUser("Request not successful. Status code: \(response.statusCode)")
                     }
                 }
+            } else if let error = error {
+                self.notifyUser(error.localizedDescription)
             }
+            
             if (jsonData.count > 0) {
                 for index in 0...jsonData.count - 1 {
                     let subjectData = jsonData[index] as! NSDictionary
@@ -143,9 +154,9 @@ class TableViewController: UITableViewController, UIPopoverPresentationControlle
         subjects = []
         self.refresher.endRefreshing()
         if !isConnectedToNetwork() {
-            self.notifyUserOfNetwork()
+            self.notifyUser("Network is currently unavailable")
         } else {
-            self.downloadData(urlToRequest: self.url)
+            self.downloadData()
         }
     }
     
@@ -171,9 +182,9 @@ class TableViewController: UITableViewController, UIPopoverPresentationControlle
         
     }
     
-    func notifyUserOfNetwork() {
+    func notifyUser(_ message : String) {
         let alert = UIAlertController(title: "Notification",
-                                      message:"Network is currently unavailable",
+                                      message: message,
             preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         present(alert, animated: true, completion: nil)

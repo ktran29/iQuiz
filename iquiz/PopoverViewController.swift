@@ -35,7 +35,7 @@ class PopoverViewController: UIViewController {
         
         let tableViewController = self.storyboard?.instantiateViewController(withIdentifier: "tableViewController") as! TableViewController
         tableViewController.url = self.urlText.text!
-        tableViewController.downloadData(urlToRequest: self.urlText.text!)
+        tableViewController.downloadData()
         self.presentingViewController!.dismiss(animated: true, completion: nil)
     }
 
